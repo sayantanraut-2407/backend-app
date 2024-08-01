@@ -17,7 +17,10 @@ const getDrugs = async () => {
             reject(error);
           }
           if (results && results.rows) {
-            resolve(results.rows);
+            const formattedData = results.rows.map((row, index) => {
+              return row.figure_name
+            });
+            resolve(formattedData);
           } else {
             reject(new Error("No results found"));
           }
