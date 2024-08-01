@@ -17,7 +17,10 @@ const getDrugs = async () => {
             reject(error);
           }
           if (results && results.rows) {
-            resolve(results.rows);
+            const formattedData = results.rows.map((row, index) => {
+              return row.figure_name
+            });
+            resolve(formattedData);
           } else {
             reject(new Error("No results found"));
           }
@@ -33,8 +36,12 @@ const getDrugs = async () => {
   const getDrugData = async() => {
     try {
       return await new Promise(function (resolve, reject) {
-        pool.query("select * from mapping_drug d left join mapping_activity a on d.cid = a.cid_id where\
-        a.activity_type is not null and a.activity_value is not null order by d.cid;", (err, results) => {
+        pool.query("select d.cid as cid, d.drug_name as drug_name, d.figure_name as figure_name, d.trial_status as trial_status, d.approved_by_fda as approved_by_fda,\
+        d.mssr_name as mssr_name, d.trial_name as trial_name, d.drug_location as drug_location, a.activity_type as activity_type, a.activity_value, a.id as activity_id,\
+        a.aid as aid, a.pubmed_id as pubmed_id, g.geneid as geneid, g.gene_name as gene_name, g.gene_symbol as gene_symbol\
+        from mapping_drug d left join mapping_activity a on d.cid = a.cid_id left join mapping_gene g on a.target_geneid = g.geneid\
+        where a.activity_type is not null and a.activity_value is not null and g.geneid is not null\
+        order by d.cid;", (err, results) => {
           if (err) {
             reject(err);
           }

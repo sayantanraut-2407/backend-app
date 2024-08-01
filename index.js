@@ -22,7 +22,6 @@ app.use(function (req, res, next) {
 app.get('/getDrugs', (req, res) => {
     drug_model.getDrugs()
     .then(response => {
-        console.log(response)
         res.status(200).send(response);
     })
     .catch(error => {
