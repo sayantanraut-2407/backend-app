@@ -6,8 +6,13 @@ const port = 3001
 const drug_model = require('./drugFetch')
 
 const fs = require("fs");
+const bodyParser = require('body-parser');
+const json2csv = require('json-2-csv');
+const path = require('path');
 
-app.use(express.json())
+app.use(express.json());
+
+app.use(bodyParser.json());
 
 app.use(cors());
 
@@ -53,6 +58,16 @@ app.get('/getViabilityAndMappingData', (req, res) => {
     //     }
     //     console.log('File has been saved');
     // });
+    // try {
+    //   const csv = json2csv.json2csv(response);
+    //   const filePath = path.join(__dirname, 'drugs_viability_data.csv');
+  
+    //   fs.writeFileSync(filePath, csv);
+    // } catch (err) {
+    //   console.error('Error converting to CSV:', err);
+    //   res.status(500).send({ message: 'Error saving CSV file' });
+    // }
+
     res.status(200).send(response);
   })
   .catch(error => {
