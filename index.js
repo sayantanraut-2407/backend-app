@@ -50,24 +50,6 @@ app.get('/getViabilityAndMappingData', (req, res) => {
   drug_model.getViabilityAndMappingData()
   .then(response => {
     const textData = JSON.stringify(response, null, 2);
-    // fs.writeFile('res.json', textData, (err) => {
-    //     if (err) {
-    //         console.error('Error writing file', err);
-    //         res.status(500).send('Error writing file');
-    //         return;
-    //     }
-    //     console.log('File has been saved');
-    // });
-    // try {
-    //   const csv = json2csv.json2csv(response);
-    //   const filePath = path.join(__dirname, 'drugs_viability_data.csv');
-  
-    //   fs.writeFileSync(filePath, csv);
-    // } catch (err) {
-    //   console.error('Error converting to CSV:', err);
-    //   res.status(500).send({ message: 'Error saving CSV file' });
-    // }
-
     res.status(200).send(response);
   })
   .catch(error => {
