@@ -6,8 +6,13 @@ const port = 3001
 const drug_model = require('./drugFetch')
 
 const fs = require("fs");
+const bodyParser = require('body-parser');
+const json2csv = require('json-2-csv');
+const path = require('path');
 
-app.use(express.json())
+app.use(express.json());
+
+app.use(bodyParser.json());
 
 app.use(cors());
 
@@ -45,14 +50,6 @@ app.get('/getViabilityAndMappingData', (req, res) => {
   drug_model.getViabilityAndMappingData()
   .then(response => {
     const textData = JSON.stringify(response, null, 2);
-    // fs.writeFile('res.json', textData, (err) => {
-    //     if (err) {
-    //         console.error('Error writing file', err);
-    //         res.status(500).send('Error writing file');
-    //         return;
-    //     }
-    //     console.log('File has been saved');
-    // });
     res.status(200).send(response);
   })
   .catch(error => {

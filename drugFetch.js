@@ -127,7 +127,6 @@ const getDrugs = async () => {
                 well_drug_combos: well_drug_combos
               };
             });
-            //console.log(JSON.stringify(formattedData));
             resolve(formattedData);
           } else {
             reject(new Error("No results found!"));
